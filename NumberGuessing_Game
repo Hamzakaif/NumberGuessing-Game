@@ -1,0 +1,51 @@
+import java.util.Scanner;
+import java.util.Random;
+public class NumberGuessingGame {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random random = new Random();
+        String playAgain = "yes";
+
+        while (playAgain.equalsIgnoreCase("yes")) {
+            int lowerBound = 1;
+            int upperBound = 100;
+            int secretNumber = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+            int maxAttempts = 10;
+            int attempts = 0;
+
+            System.out.println("Welcome to the Number Guessing Game!");
+            System.out.println("I'm thinking of a number between " + lowerBound + " and " + upperBound + ".");
+
+            while (attempts < maxAttempts) {
+                try {
+                    System.out.print("Take a guess: ");
+                    int userGuess = scanner.nextInt();
+                    attempts++;
+
+                    if (userGuess < secretNumber) {
+                        System.out.println("Too low. Try again.");
+                    } else if (userGuess > secretNumber) {
+                        System.out.println("Too high. Try again.");
+                    } else {
+                        System.out.println("Congratulations! You guessed the number " + secretNumber + " in " + attempts + " attempts.");
+                        break;
+                    }
+                } catch (java.util.InputMismatchException e) {
+                    System.out.println("Please enter a valid number.");
+                    scanner.nextLine();  // Consume the invalid input
+                }
+            }
+
+            if (attempts >= maxAttempts) {
+                System.out.println("Sorry, you've reached the maximum number of attempts. The correct number was " + secretNumber + ".");
+            }
+
+            System.out.print("Do you want to play again? (yes/no): ");
+            playAgain = scanner.next();
+        }
+
+        System.out.println("Thanks for playing!");
+        scanner.close();
+    }
+}
+
